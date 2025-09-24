@@ -8,6 +8,10 @@ const Home = () => {
                 <p className="lead mb-4">
                     Manage your employees effortlessly with our Employee Management System.
                 </p>
+                <p className="lead mb-4">
+                    Backend is deployed on Render, it may take some time to start.
+                    If it doesn’t start after a few seconds, try refreshing the page.
+                </p>
                 <Link to="/employees" className="btn btn-primary btn-lg">
                     Go to Employee List
                 </Link>
