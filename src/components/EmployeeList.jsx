@@ -9,7 +9,7 @@ const EmployeeList = () => {
 
     useEffect(() => {
         getEmpData().then((data) => setEmployees(data));
-    })
+    }, [])
 
     const handleAddEmp = () => {
         navigate('/addEmployee')
@@ -17,11 +17,13 @@ const EmployeeList = () => {
 
     const handleUpdate = (id) => {
         navigate(`/editEmployee/${id}`)
+        window.location.reload();
     }
 
     const handleDelete = (id) => {
         deleteEmpData(id).then((res) => {
             console.log(res.data);
+            window.location.reload();
         })
     }
 
@@ -41,19 +43,30 @@ const EmployeeList = () => {
                 </thead>
                 <tbody>
                     {
-                        employees.map((emp) => (
-                            <tr key={emp.id}>
-                                <td>{emp.id}</td>
-                                <td>{emp.firstName}</td>
-                                <td>{emp.lastName}</td>
-                                <td>{emp.email}</td>
-                                <td>
-                                    <button onClick={() => handleUpdate(emp.id)} className="btn btn-warning p-2 mx-5">Update</button>
-                                    <button onClick={() => handleDelete(emp.id)} className="btn btn-danger p-2">Update</button>
+                        !employees || employees.length === 0 ? (
+                            <tr>
+                                <td colSpan="5" className="text-center p-4">
+                                    <div>
+                                        <p>Loading employees... Please wait </p>
+                                        <p>Backend is deployed on Render, it may take some time to start.</p>
+                                        <p>If it doesn’t start after a few seconds, try refreshing the page.</p>
+                                    </div>
                                 </td>
                             </tr>
-                        ))
-                    }
+                        ) : (
+                            employees.map((emp) => (
+                                <tr key={emp.id}>
+                                    <td>{emp.id}</td>
+                                    <td>{emp.firstName}</td>
+                                    <td>{emp.lastName}</td>
+                                    <td>{emp.email}</td>
+                                    <td>
+                                        <button onClick={() => handleUpdate(emp.id)} className="btn btn-warning p-2 mx-5">Update</button>
+                                        <button onClick={() => handleDelete(emp.id)} className="btn btn-danger p-2">Delete</button>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                 </tbody>
             </table>
         </div>
